@@ -33,16 +33,14 @@ model Author {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  firstname String
-  lastname  String
-  username  String
-  email     String @db.VarChar(255)
-  password  String
-  role      Role   @default(USER)
-  books     Book[]
+  id       Int    @id @default(autoincrement())
+  username String
+  email    String @db.VarChar(255)
+  password String
+  role     Role   @default(USER)
+  books    Book[]
 
-  @@unique([email, username])
+  @@unique([email])
   @@map("users")
 }
 
