@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { AxiosError, AxiosResponse } from "axios";
 import { handleError } from "@utils/error_handler";
-import signin from "@lib/api";
+import { signin } from "@lib/api";
 import { useRouter } from "next/router";
 
 const SignInPage = () => {
@@ -34,7 +34,7 @@ const SignInPage = () => {
       setError(null);
     },
     onSuccess: (response) => {
-      router.push("/");
+      router.push("/dashboard");
       reset();
     },
     onError: (responseError) => {
@@ -67,7 +67,7 @@ const SignInPage = () => {
             <Input label="Password" name="password" type={"password"} />
 
             <Button className="w-full" type="submit" disabled={isSubmitting}>
-              Register
+              Sign In
             </Button>
           </form>
         </FormProvider>

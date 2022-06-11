@@ -13,11 +13,17 @@ export const verifyAuth =
         .json({ error: "Not Authorized" });
     }
 
-    const decoded = verifyAccessToken(token);
+    const { uid } = verifyAccessToken(token) as {
+      uid: number;
+      iat: number;
+      exp: number;
+    };
 
     if (!token) {
       return res.status(StatusCodes.UNAUTHORIZED);
     }
+
+    req.locals = { uid };
 
     return await handler(req, res);
   };

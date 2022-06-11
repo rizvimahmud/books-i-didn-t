@@ -7,6 +7,7 @@ export const getProps = async ({ context, user }: Params) => {
       authors: true,
     },
   });
+
   return {
     props: {
       data: JSON.parse(JSON.stringify(books)),

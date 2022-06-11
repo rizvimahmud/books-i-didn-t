@@ -16,10 +16,11 @@ export const Button: React.FC<ButtonProps> = (props) => {
     children,
     className = "",
     style = {},
-    active = false,
+    active,
     loading = false,
     type = "button",
     disabled = false,
+    ...rest
   } = props;
 
   const classes = cn(
@@ -31,7 +32,13 @@ export const Button: React.FC<ButtonProps> = (props) => {
   );
 
   return (
-    <button style={style} className={classes} disabled={disabled} type={type}>
+    <button
+      style={style}
+      className={classes}
+      disabled={disabled}
+      type={type}
+      {...rest}
+    >
       {children}
       {loading && (
         <i className="ml-3">

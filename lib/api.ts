@@ -1,5 +1,8 @@
 import axios from "axios";
+import { NextApiRequest } from "next";
 import { SigninPayload, UserDocument } from "types/Auth";
+import { prisma } from "@lib/prisma";
+import { Book } from "types/Book";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -8,10 +11,6 @@ const api = axios.create({
   },
   withCredentials: true,
 });
-
-export function getBooks() {
-  return api.get("/books");
-}
 
 export function getUserByEmail(email: string) {
   return prisma.user.findUnique({
@@ -31,6 +30,18 @@ export function signup(payload: UserDocument) {
   return api.post("/signup", payload);
 }
 
-export default function signin(payload: SigninPayload) {
+export function signin(payload: SigninPayload) {
   return api.post("/signin", payload);
+}
+
+export function signout() {
+  return api.get("/logout");
+}
+
+export function getMe() {
+  return api.get("/me").then((res) => res.data);
+}
+
+export function getBooksByUser(): Promise<Book[]> {
+  return api.get("/books").then((res) => res.data);
 }

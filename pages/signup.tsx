@@ -33,7 +33,7 @@ const SignUpPage = () => {
     onMutate: () => {
       setError(null);
     },
-    onSuccess: (response) => {
+    onSuccess: () => {
       router.push("/");
       reset();
     },

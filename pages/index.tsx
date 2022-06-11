@@ -1,37 +1,45 @@
-import { Layout } from "@components/Layout";
-import { Book } from "types/Book";
-import { BookCard } from "@components/BookCard";
-import { withUser } from "@lib/with_user";
-import { UserDocument, UserDocumentWithoutPassword } from "types/Auth";
-import { getProps } from "@lib/get_props";
+import { NextLink } from "@components/NextLink";
+import useUser from "@context/user-context";
 
-const Index = ({
-  data: books,
-  user,
-}: {
-  data: Book[];
-  user: UserDocumentWithoutPassword;
-}) => {
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+const Index = () => {
+  const { user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.replace("/dashboard");
+    }
+  }, [user]);
+
   return (
-    <Layout>
-      <section className="pt-8">
-        <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {books.map((book) => (
-              <div
-                key={book.id?.toString()}
-                className="border border-gray-1 rounded-md"
-              >
-                <BookCard book={book} />
-              </div>
-            ))}
+    <main className="max-w-lg mx-auto pt-9">
+      <section className="min-h-screen px-8 md:px-0">
+        <div className="mt-8">
+          <h1 className="text-4xl font-bold tracking-wider text-center leading-tight text-black">
+            Record your reading goals
+          </h1>
+          <div className="flex flex-col items-center mt-8">
+            <NextLink
+              href="/signup"
+              className="px-4 py-3 bg-black rounded-md text-base text-white hover:opacity-75"
+            >
+              Create a free account
+            </NextLink>
+            <span className="my-2 text-gray-500 text-sm">Or</span>
+            <p className="text-base text-gray-500">
+              <NextLink href={"/signin"} className="underline">
+                Sign In
+              </NextLink>{" "}
+              to your account
+            </p>
           </div>
         </div>
       </section>
-    </Layout>
+    </main>
   );
 };
-
-export const getServerSideProps = withUser(getProps);
 
 export default Index;

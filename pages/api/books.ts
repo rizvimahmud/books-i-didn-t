@@ -7,7 +7,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(404).json({ message: "Bad Request" });
     return;
   }
-  const books = await prisma.book.findMany();
+
+  const books = await prisma.book.findMany({
+    where: {
+      users: {
+        some: {
+          id: req.locals.uid,
+        },
+      },
+    },
+    include: {
+      authors: true,
+    },
+  });
   res.status(200).json(books);
 };
 

@@ -23,7 +23,7 @@ export const withUser = <T>(
   const getServerSideProps: GetServerSideProps<T> = async (context) => {
     const defaultReturnObject = {
       redirect: {
-        destination: "/signin",
+        destination: "/",
         permanent: false,
       },
     };
