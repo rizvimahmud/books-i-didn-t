@@ -16,3 +16,9 @@ export type Book = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+
+export type ReadListResponse = {
+  id?: string;
+  name: string;
+  books?: Book[];
+};

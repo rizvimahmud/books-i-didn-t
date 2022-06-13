@@ -20,14 +20,11 @@ export const UserProvider: React.FC<UserProviderProps> = ({
   ...props
 }) => {
   const [user, setUser] = React.useState(initialUser);
-
   const getUser = async () => {
     const user = await getMe();
 
     setUser(user.data);
   };
-
-  console.log(user);
 
   useEffect(() => {
     if (!user) {

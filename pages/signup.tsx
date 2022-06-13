@@ -34,7 +34,7 @@ const SignUpPage = () => {
       setError(null);
     },
     onSuccess: () => {
-      router.push("/");
+      router.push("/dashboard");
       reset();
     },
     onError: (responseError) => {

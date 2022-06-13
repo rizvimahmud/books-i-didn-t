@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Book {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   title       String   @unique @db.VarChar(255)
   subtitle    String   @db.Text
   authors     Author[]
-  users       User[]
+  lists       List[]
   publishedAt DateTime
   image_url   String   @default("")
   createdAt   DateTime @default(now())
@@ -23,7 +23,7 @@ model Book {
 }
 
 model Author {
-  id        Int    @id @default(autoincrement())
+  id        String @id @default(cuid())
   name      String
   image_url String @default("")
   books     Book[]
@@ -33,15 +33,31 @@ model Author {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   username String
   email    String @db.VarChar(255)
   password String
   role     Role   @default(USER)
-  books    Book[]
+  lists    List[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([email])
   @@map("users")
+}
+
+model List {
+  id     String @id @default(cuid())
+  name   String
+  books  Book[]
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt DateTime @default(now())
+
+  @@unique([name])
+  @@map("lists")
 }
 
 enum Role {

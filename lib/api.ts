@@ -1,8 +1,7 @@
 import axios from "axios";
-import { NextApiRequest } from "next";
 import { SigninPayload, UserDocument } from "types/Auth";
 import { prisma } from "@lib/prisma";
-import { Book } from "types/Book";
+import { ReadListResponse } from "types/Book";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -42,6 +41,7 @@ export function getMe() {
   return api.get("/me").then((res) => res.data);
 }
 
-export function getBooksByUser(): Promise<Book[]> {
-  return api.get("/books").then((res) => res.data);
+//type promise output
+export function getUsersBookLists(): Promise<ReadListResponse[]> {
+  return api.get("/read").then((res) => res.data);
 }

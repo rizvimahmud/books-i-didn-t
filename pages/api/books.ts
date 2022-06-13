@@ -1,4 +1,4 @@
-import { verifyAuth } from "@lib/middleware";
+import { StatusCodes } from "http-status-codes";
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../lib/prisma";
 
@@ -9,18 +9,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const books = await prisma.book.findMany({
-    where: {
-      users: {
-        some: {
-          id: req.locals.uid,
-        },
-      },
-    },
     include: {
       authors: true,
     },
   });
-  res.status(200).json(books);
+  res.status(StatusCodes.OK).json(books);
 };
 
-export default verifyAuth(handler);
+export default handler;

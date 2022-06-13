@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 
 export type AccessTokenPayload = {
-  uid: number;
+  uid: string;
 };
 
 export type UserDocument = Prisma.UserCreateInput;

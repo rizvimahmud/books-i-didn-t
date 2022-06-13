@@ -9,6 +9,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   active?: Boolean;
   loading?: Boolean;
+  variant?: "flat" | "ghost";
 }
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -16,6 +17,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     children,
     className = "",
     style = {},
+    variant = "flat",
     active,
     loading = false,
     type = "button",
@@ -25,8 +27,13 @@ export const Button: React.FC<ButtonProps> = (props) => {
 
   const classes = cn(
     className,
-    "inline-flex justify-center px-4 py-4 text-base leading-tight text-center rounded-md bg-black text-white hover:opacity-80 hover:outline-none hover:ring-0 focus:outline-none focus:ring-0ffset-2 focus:ring-gray-400 transition duration-100",
+    "inline-flex justify-center items-center px-4 py-3 text-sm tracking-wide rounded-md hover:outline-none hover:ring-0 focus:outline-none focus:ring-0ffset-2 focus:ring-gray-400 transition duration-100",
     { "border-2 border-gray-300": active },
+    { "bg-black text-white hover:opacity-85": variant === "flat" },
+    {
+      "bg-transparent text-black py-2 border border-gray-400 hover:border-gray-600":
+        variant === "ghost",
+    },
     { "bg-opacity-80 cursor-not-allowed": loading },
     { "bg-opacity-80 cursor-not-allowed": disabled }
   );
@@ -39,12 +46,13 @@ export const Button: React.FC<ButtonProps> = (props) => {
       type={type}
       {...rest}
     >
-      {children}
-      {loading && (
+      {loading ? (
         <i className="ml-3">
           {" "}
-          <Spinner stroke="#ffffff" />
+          <Spinner stroke="#ffffff" width="18px" />
         </i>
+      ) : (
+        children
       )}
     </button>
   );
